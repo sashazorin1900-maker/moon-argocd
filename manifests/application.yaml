@@ -6,20 +6,28 @@ metadata:
   namespace: argocd
 
 spec:
+
   project: default
 
-  source:
-    repoURL: https://charts.aerokube.ru
+  sources:
+
+  - repoURL: https://charts.aerokube.ru
     chart: moon2
     targetRevision: 2.8.1
-
     helm:
       valueFiles:
-        - moon-values.yaml
+      - $values/manifests/moon-values.yaml
+
+
+  - repoURL: https://github.com/sashazorin1900-maker/moon-argocd.git
+    targetRevision: main
+    ref: values
+
 
   destination:
     server: https://kubernetes.default.svc
     namespace: moon
+
 
   syncPolicy:
     automated:
